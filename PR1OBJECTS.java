@@ -7,6 +7,7 @@ public class PR1OBJECTS {
 
         System.out.println("<----Bienvenido a analiza tus DATASETS!---->");
         File selectedFile = selectFile();
+        System.out.println();
 
         System.out.println(selectedFile);
 
@@ -49,13 +50,16 @@ public class PR1OBJECTS {
         } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
         } */
-    }          
+    }
+    public static void nowWhat(File selectedFile){
+
+    }
     public static File selectFile(){
         File file1 = new File("./33337050.csv");
         File file2 = new File("./33337063.csv");
         File file3 = new File("./33337045.csv");
         Scanner in = new Scanner(System.in);
-        System.out.println("    Escoge tu archivo a cargar: ");
+        System.out.println("        Escoge tu archivo a cargar: ");
         System.out.println(" 1. Ciudad de Pasadena \n 2. Ciudad de Bremerton \n 3. Ciudad de Oakland\n 4. Cargar un archivo diferente\n 5. Salir");
         int opcion = in.nextInt();
         File selectedFile = new File("./33337050.csv");
@@ -83,7 +87,7 @@ public class PR1OBJECTS {
                 System.exit(0);
                 h=false;
             }
-            else if(opcion>5){
+            else if(opcion>5 || opcion<=0){
                 System.out.println("Introduzca un número válido.");
                 opcion = in.nextInt();
             }
