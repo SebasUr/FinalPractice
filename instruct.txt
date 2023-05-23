@@ -1,0 +1,51 @@
+1. Escoja cuál archivo cargar
+ 	|1.
+	|2.
+	|3.
+	|4. Otro archivo
+	|5. Salir
+
+// (Leera toda las columnas sin excepción, corregir.-)
+
+Se abre Menú de navegación que incluirá:
+|
+	--¿AHORA QUE QUIERES HACER?--
+ -Analizar el archivo completamente (CSV ANALYZER)
+ -Adicionar otro archivo (Crear un nuevo archivo con un nuevo y un pasado archivo)
+ -Cargar un archivo distinto.
+
+ -Filtrar en el archivo
+     |Se desprenderá otro menú con las opciones de:
+	1. Todo el archivo
+
+	2. Nombre de Estación
+	3. Rango de temperaturas
+	4. Rango de Precipitación
+		
+	5. Las columanas relevantes (Anteriores 4).
+
+--- En caso de escoger una columna.
+		|1.Agregar otro filtro
+		|2.Quitar un filtro
+		|3. Continuar
+		|4. Salir.
+			|1.Ver datos nulos de cada columna
+			|2.Visualizar primeros datos del dataset
+			|3.Visualizar últimos datos del dataset
+			|4.Cantidad de registros y columnas
+			|5.Visualizar mínimos de cada columna
+			|6. Visualizar máximos de cada columna
+			|7. promedio de cada columna
+			|8. Cuartiles
+				|25%
+				|50%
+				|75%
+			|9.Salir
+
+
+	
+	
+
+ -Analizar un archivo (CSV ANALYZER)
+ 
+	
