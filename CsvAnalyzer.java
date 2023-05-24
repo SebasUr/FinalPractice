@@ -15,11 +15,11 @@ class CsvAnalyzer {
     public void analyze() {
         imprimir(data);
         System.out.println("<----------------------------------------------------------->");
-        for(int e = 2;e<data[0].length;e++) {
+        for(int e = 0;e<data[0].length;e++) {
             System.out.println(contarNulosYVacios(e, data));
         }
         System.out.println("<----------------------------------------------------------->");
-        for(int e = 3;e<data[0].length;e++) {
+        for(int e = 0;e<data[0].length;e++) {
             System.out.println(maxPerColumn(e, data));
         }
         System.out.println("<----------------------------------------------------------->");
@@ -117,7 +117,7 @@ class CsvAnalyzer {
     private String maxPerColumn(int columna, String[][] matriz){
         float max = 0;
         
-        for (int i = 1;i<matriz.length;i++) {
+        for (int i = 0;i<matriz.length;i++) {
             if(matriz[i][columna] != null && !matriz[i][columna].isEmpty() && !matriz[i][columna].equals("")){
                 String datostring = matriz[i][columna];
                 String numstring = "";
@@ -139,7 +139,7 @@ class CsvAnalyzer {
         }
         float count = max;
         float min = 0;
-        for (int i = 1;i<matriz.length;i++) {
+        for (int i = 0;i<matriz.length;i++) {
             if(matriz[i][columna] != null && !matriz[i][columna].isEmpty() && !matriz[i][columna].equals("")){
                 String datostring = matriz[i][columna];
                 String numstring = "";

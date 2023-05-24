@@ -5,11 +5,13 @@ import java.util.Scanner;
 public class PR1OBJECTS {
     public static void main(String[] args) {
 
-        System.out.println("<----Bienvenido a analiza tus DATASETS!---->");
+        System.out.println("<----¡Bienvenido a analiza tus DATASETS!---->");
         File selectedFile = selectFile();
         System.out.println();
 
         System.out.println(selectedFile);
+
+        nowWhat(selectedFile);
 
 
 
@@ -32,8 +34,8 @@ public class PR1OBJECTS {
 
 
         // Analyzer CSV - Analiza todo el archivo CSS e imprime en consola todos los datos en conjunto, con sus respectivas características.
-        
-/*         CsvAnalyzer analyzer = new CsvAnalyzer(selectedFile);
+/*         
+        CsvAnalyzer analyzer = new CsvAnalyzer(selectedFile);
         analyzer.analyze();
  */
         // Columna, Clase que recibe la columna y el archivo css para crear un objeto que alberga la columna y se pueden llamar métodos para ver sus características
@@ -51,31 +53,69 @@ public class PR1OBJECTS {
             System.out.println(e.getMessage());
         } */
     }
-    public static void nowWhat(File selectedFile){
 
+    
+    public static void menuFiltrar(){
+        System.out.println();
+        System.out.println("- ¿Qué columnas quieres filtrar? -");
+        System.out.println("1. Nombre de la estación\n 2. Rango de temperaturas \n 3. Rango de precipitación");
+
+        
+        
     }
+    public static void nowWhat(File selectedFile){
+        Scanner in = new Scanner(System.in);
+        System.out.println("■ Escoge qué quieres hacer con el archivo ■ " + selectedFile);
+        System.out.println(" 1. Solamente quiero hacer un análisis completo del archivo\n 2. Adicionar otro archivo \n 3. Cargar un archivo distinto");
+        int opcion = in.nextInt();
+        boolean h = true;
+
+        while(h==true){
+            if(opcion==1){
+                CsvAnalyzer analyzer = new CsvAnalyzer(selectedFile);
+                analyzer.analyze();
+                h = false;
+            }else if(opcion==2){
+                System.out.println("Casoprueba");
+                h = false;
+            }else if(opcion==3){
+                selectedFile = selectFile();
+                nowWhat(selectedFile);
+                h = false;
+            }
+            else if(opcion>3 || opcion<=0){
+                System.out.println("Introduzca un número válido.");
+                opcion = in.nextInt();
+            }
+        }
+        
+    }
+
     public static File selectFile(){
-        File file1 = new File("./33337050.csv");
-        File file2 = new File("./33337063.csv");
-        File file3 = new File("./33337045.csv");
+        File file1 = new File("./3337050.csv");
+        File file2 = new File("./3337063.csv");
+        File file3 = new File("./3337045.csv");
         Scanner in = new Scanner(System.in);
         System.out.println("        Escoge tu archivo a cargar: ");
         System.out.println(" 1. Ciudad de Pasadena \n 2. Ciudad de Bremerton \n 3. Ciudad de Oakland\n 4. Cargar un archivo diferente\n 5. Salir");
         int opcion = in.nextInt();
-        File selectedFile = new File("./33337050.csv");
+        File selectedFile = new File("./3337050.csv");
         boolean h = true;
 
         while(h==true){
             if(opcion==1){
                 System.out.println("Cargando archivo de la Ciudad de Pasadena...");
+                System.out.println();
                 selectedFile = file1;
                 h=false;
             }else if(opcion==2){
                 System.out.println("Cargando archivo de la Ciudad de Bremerton...");
+                System.out.println();
                 selectedFile = file2;
                 h=false;
             }else if(opcion==3){
                 System.out.println("Cargando archivo de la Ciudad de Oakland...");
+                System.out.println();
                 selectedFile = file3;
                 h=false;
             }else if(opcion==4){
