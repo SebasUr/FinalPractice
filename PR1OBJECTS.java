@@ -5,15 +5,25 @@ import java.util.Scanner;
 public class PR1OBJECTS {
     public static void main(String[] args) {
 
-        System.out.println("<----¡Bienvenido a analiza tus DATASETS!---->");
+/*         System.out.println("<----¡Bienvenido a analiza tus DATASETS!---->");
         File selectedFile = selectFile();
         System.out.println();
 
         System.out.println(selectedFile);
 
-        nowWhat(selectedFile);
+        nowWhat(selectedFile); */
+        File file = new File("./3337050.csv");
 
+        
+        CsvR myArchivo = new CsvR(file);
 
+        myArchivo.loadData();
+        myArchivo.imprimir();
+        String[][] data = myArchivo.getData();
+        System.out.println(data[0][1]);
+        System.out.println(data[0][2]);
+        System.out.println(data[0][3]);
+        System.out.println(data[0][4]);
 
 
 

@@ -2,16 +2,17 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
-public class Hola {
+public class CsvR {
     private String[][] data;
     private File file;
 
-    public Hola(File file) {
+    public CsvR(File file) {
         this.file = file;
         this.data = loadData();
     }
 
-    private String[][] loadData() {
+
+    public String[][] loadData() {
         int columnas = contarColumnas(file)+1;
         int filas = contarLineas(file);
         String[][] aloj = new String[filas][columnas];
@@ -41,6 +42,11 @@ public class Hola {
 
         return aloj;
     }
+
+    public String[][] getData(){
+        return this.data;
+    }
+    
     private int contarColumnas(File archivo){
         Scanner scanner;
         int columnas = 0;
@@ -78,11 +84,11 @@ public class Hola {
     }
 
 
-    public void imprimir(String[][] miMatriz){
-        for(int i =0; i<miMatriz.length; i++){
-            for(int j=0; j<miMatriz[i].length; j++) // el length de la fila actual.
+    public void imprimir(){
+        for(int i =0; i<data.length; i++){
+            for(int j=0; j<data[i].length-23; j++) // el length de la fila actual.
             {
-                System.out.print(miMatriz[i][j] + "\t");
+                System.out.print(data[i][j] + "\t");
             }
             System.out.println();
         }
