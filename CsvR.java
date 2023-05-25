@@ -6,42 +6,62 @@ public class CsvR {
     private String[][] data;
     private File file;
 
-    public CsvR(File file) {
+    public CsvR(File file) throws FileNotFoundException {
         this.file = file;
         this.data = loadData();
     }
 
 
-    public String[][] loadData() {
-        int columnas = contarColumnas(file)+1;
+    public String[][] loadData() throws FileNotFoundException {
+        int columnas = contarColumnas(file) + 1;
         int filas = contarLineas(file);
         String[][] aloj = new String[filas][columnas];
+        Scanner scan1 = new Scanner(file);
+        String linea1 = scan1.nextLine();
+        String[] myLine = linea1.split(",");
+        String[] nuevo = new String[myLine.length+1];
+        for(int i=0; i<nuevo.length;i++){
+            if(i<2){
+                nuevo[i] = myLine[i];
+            }
+            if(i==2){
+                nuevo[i] = "\"STATE\"";
+            }
+            if(i>2){
+                nuevo[i] = myLine[i-1];
+            }
+        }
+
+        String[][] asd = {nuevo};
 
         Scanner scanner;
         try {
             int fila = 0;
+            boolean primeraLineaLeida = false;
             scanner = new Scanner(file);
             while (scanner.hasNextLine()) {
                 String line = scanner.nextLine();
+                if (!primeraLineaLeida) {
+                    primeraLineaLeida = true;
+                    continue; // Salta la primera línea
+                }
                 String[] fields = line.split(",");
-                for(int i=0; i<fields.length; i++){
-                    if (i>=2) {
-                        aloj[0][i+1] = fields[i];
-                    }
+                for (int i = 0; i < fields.length; i++) {
                     aloj[fila][i] = fields[i];
                 }
                 fila++;
-                aloj[0][2] = "STATE";
             }
-
+    
             scanner.close();
-
-        } catch(FileNotFoundException e) {
+    
+        } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-
-        return aloj;
+        String[][] laMatriz = combinarMatrices(asd, aloj);
+        return laMatriz;
     }
+
+
 
     public String[][] getData(){
         return this.data;
@@ -83,17 +103,6 @@ public class CsvR {
         return totalLineas;
     }
 
-
-    public void imprimir(){
-        for(int i =0; i<data.length; i++){
-            for(int j=0; j<data[i].length-18; j++) // el length de la fila actual.
-            {
-                System.out.print(data[i][j] + "\t");
-            }
-            System.out.println();
-        }
-    }
-
     public String[][] combinarMatrices(String[][] matriz1, String[][] matriz2) {
         int filas1 = matriz1.length;
         int columnas1 = matriz1[0].length;
@@ -115,115 +124,6 @@ public class CsvR {
         }
 
         return matrizCombinada;
-    }
-
-    public String contarNulosYVacios(int columna, String[][] matriz) {
-        int variable = 0;
-        int contadorVac = 0;
-        for (int i = 0;i<matriz.length;i++) {
-            if (matriz[i][columna] == null) {
-                variable+=1;
-            }
-            else if (matriz[i][columna].isEmpty() || matriz[i][columna].equals("")) {
-                contadorVac+=1;
-            }
-        }
-        return "La columna " + matriz[0][columna] + " tiene " + variable + " nulos"+ " y tiene " + contadorVac + " vacios.";
-    }
-
-    public String maxPerColumn(int columna, String[][] matriz){
-        float max = 0;
-        
-        for (int i = 0;i<matriz.length;i++) {
-            if(matriz[i][columna] != null && !matriz[i][columna].isEmpty() && !matriz[i][columna].equals("")){
-                String datostring = matriz[i][columna];
-                String numstring = "";
-                for (int j = 0; j < datostring.length(); j++) {
-                    char c = datostring.charAt(j);
-                    if ((c >= '0' && c <= '9') || c == '.') {
-                        numstring += c;
-                    }           
-                }
-                if (numstring.length() > 0) {
-                    float numActual = Float.parseFloat(numstring);
-
-                    if (numActual > max) {
-                        max = numActual;
-                    }
-                }
-                
-            }
-        }
-        float count = max;
-        float min = 0;
-        for (int i = 0;i<matriz.length;i++) {
-            if(matriz[i][columna] != null && !matriz[i][columna].isEmpty() && !matriz[i][columna].equals("")){
-                String datostring = matriz[i][columna];
-                String numstring = "";
-                for (int j = 0; j < datostring.length(); j++) {
-                    char c = datostring.charAt(j);
-                    if ((c >= '0' && c <= '9') || c == '.') {
-                        numstring += c;
-                    }           
-                }
-                if (numstring.length() > 0) {
-                    float numActual = Float.parseFloat(numstring);
-
-                    if (numActual < count) {
-                        min = numActual;
-                        count = numActual;
-                    }
-                }
-                
-                
-            }
-        }
-        return "La columna " + matriz[0][columna] + " tiene como número máximo " + max + " y " + min + " como número mínimo.";
-
-        
-    }
-    private void ordenarArreglo(String[] arregloStrings) {
-        for (int i = 0; i < arregloStrings.length - 1; i++) {
-            for (int j = i + 1; j < arregloStrings.length; j++) {
-                if (arregloStrings[j].compareTo(arregloStrings[i]) < 0) {
-                    String temp = arregloStrings[i];
-                    arregloStrings[i] = arregloStrings[j];
-                    arregloStrings[j] = temp;
-                }
-            }
-        }
-    }
-
-    public String cuartil25(String[][] matriz, int columna) {
-        int filas = contarColumnas(file);
-        
-        String[] arr = new String[filas];
-        
-        for (int i = 0; i < filas; i++) {
-            arr[i] = matriz[i][columna];
-        }
-        
-        ordenarArreglo(arr);
-        
-        int index = (int) Math.ceil(filas * 0.25) - 1;
-        
-        return arr[index];
-    }
-
-    public String cuartil75(String[][] matriz, int columna) {
-        int filas = contarColumnas(file);
-        
-        String[] arr = new String[filas];
-        
-        for (int i = 0; i < filas; i++) {
-            arr[i] = matriz[i][columna];
-        }
-        
-        ordenarArreglo(arr);
-        
-        int index = (int) Math.ceil(filas * 0.75) - 1;
-        
-        return arr[index];
     }
 }
 

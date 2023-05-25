@@ -19,11 +19,12 @@ Se abre Menú de navegación que incluirá:
 	1. Todo el archivo
 
 	2. Nombre de Estación
+	US1CALA0036 si opcion = US1CALA0036 {
+		buscaría las filas que contengan sea "\"US1CALA0036"\" en la columna "\"STATION"\"
+	}
 	3. Rango de temperaturas
 	4. Rango de Precipitación
 		
-	5. Las columanas relevantes (Anteriores 4).
-
 --- En caso de escoger una columna.
 		|1.Agregar otro filtro
 		|2.Quitar un filtro
@@ -37,6 +38,7 @@ Se abre Menú de navegación que incluirá:
 			|6. Visualizar máximos de cada columna
 			|7. promedio de cada columna
 			|8. Cuartiles
+			|9. Imprimir mi dataset con sus filtros.
 				|25%
 				|50%
 				|75%

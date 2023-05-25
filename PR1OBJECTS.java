@@ -3,16 +3,23 @@ import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 public class PR1OBJECTS {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws FileNotFoundException {
 
-/*         System.out.println("<----¡Bienvenido a analiza tus DATASETS!---->");
-        File selectedFile = selectFile();
-        System.out.println();
+        System.out.println("<----¡Bienvenido a analiza tus DATASETS!---->");
+        CsvR selectedFile = selectFile();
+        String[][] Matriztotal = nowWhat(selectedFile);
+        menuFiltrar(Matriztotal);
 
-        System.out.println(selectedFile);
 
-        nowWhat(selectedFile); */
-        File file = new File("./3337050.csv");
+
+
+
+
+
+
+
+
+/*         File file = new File("./3337050.csv");
 
         
         CsvR myArchivo = new CsvR(file);
@@ -24,10 +31,10 @@ public class PR1OBJECTS {
         System.out.println(data[0][2]);
         System.out.println(data[0][3]);
         System.out.println(data[0][4]);
+ */
 
 
-
-
+        
 
 
 
@@ -65,43 +72,51 @@ public class PR1OBJECTS {
     }
 
     
-    public static void menuFiltrar(){
+    public static void menuFiltrar(String[][] matrizFinal){
         System.out.println();
         System.out.println("- ¿Qué columnas quieres filtrar? -");
-        System.out.println("1. Nombre de la estación\n 2. Rango de temperaturas \n 3. Rango de precipitación");
-
-        
-        
+        System.out.println(" 1. Nombre de la estación\n 2. Rango de temperaturas \n 3. Rango de precipitación");
     }
-    public static void nowWhat(File selectedFile){
+
+    public static String[][] nowWhat(CsvR selectedFile) throws FileNotFoundException{
         Scanner in = new Scanner(System.in);
         System.out.println("■ Escoge qué quieres hacer con el archivo ■ " + selectedFile);
-        System.out.println(" 1. Solamente quiero hacer un análisis completo del archivo\n 2. Adicionar otro archivo \n 3. Cargar un archivo distinto");
+        System.out.println(" 1. Solamente quiero hacer un análisis completo del archivo\n 2. Adicionar otro archivo \n 3. Cargar un archivo distinto \n 4. Continuar con los filtro" );
         int opcion = in.nextInt();
         boolean h = true;
+        selectedFile.loadData();
+        String [][] FileActual = selectedFile.getData(); 
 
         while(h==true){
             if(opcion==1){
-                CsvAnalyzer analyzer = new CsvAnalyzer(selectedFile);
-                analyzer.analyze();
+                // Csv Analyzer
                 h = false;
             }else if(opcion==2){
-                System.out.println("Casoprueba");
-                h = false;
+                CsvR Archivoadicional = selectFile();
+                Archivoadicional.loadData();
+                String[][] matrizAdicional = Archivoadicional.getData();
+                FileActual = Archivoadicional.combinarMatrices(FileActual,matrizAdicional);
+                h=false;
+
             }else if(opcion==3){
                 selectedFile = selectFile();
                 nowWhat(selectedFile);
                 h = false;
+            }else if(opcion==4){
+                System.out.println("Continuando...");
+                System.out.println();
+                return FileActual;
             }
-            else if(opcion>3 || opcion<=0){
+            else if(opcion>4 || opcion<=0){
                 System.out.println("Introduzca un número válido.");
                 opcion = in.nextInt();
             }
         }
+        return FileActual;
         
     }
 
-    public static File selectFile(){
+    public static CsvR selectFile() throws FileNotFoundException{
         File file1 = new File("./3337050.csv");
         File file2 = new File("./3337063.csv");
         File file3 = new File("./3337045.csv");
@@ -111,27 +126,33 @@ public class PR1OBJECTS {
         int opcion = in.nextInt();
         File selectedFile = new File("./3337050.csv");
         boolean h = true;
+        CsvR csvArchivo = new CsvR(selectedFile); 
+
 
         while(h==true){
             if(opcion==1){
                 System.out.println("Cargando archivo de la Ciudad de Pasadena...");
                 System.out.println();
                 selectedFile = file1;
+                csvArchivo = new CsvR(selectedFile); 
                 h=false;
             }else if(opcion==2){
                 System.out.println("Cargando archivo de la Ciudad de Bremerton...");
                 System.out.println();
                 selectedFile = file2;
+                csvArchivo = new CsvR(selectedFile); 
                 h=false;
             }else if(opcion==3){
                 System.out.println("Cargando archivo de la Ciudad de Oakland...");
                 System.out.println();
                 selectedFile = file3;
+                csvArchivo = new CsvR(selectedFile); 
                 h=false;
             }else if(opcion==4){
                 System.out.println("Ingresa la ruta completa del archivo para cargarlo:");
                 String filePath = in.next();
                 selectedFile = new File(filePath);
+                csvArchivo = new CsvR(selectedFile); 
                 h=false;
             }else if(opcion==5){
                 System.exit(0);
@@ -142,7 +163,7 @@ public class PR1OBJECTS {
                 opcion = in.nextInt();
             }
         }
-        return selectedFile;
+        return csvArchivo;
     }
 }
 
