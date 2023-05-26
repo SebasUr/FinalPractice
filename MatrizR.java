@@ -91,13 +91,18 @@ public class MatrizR {
         }
     }
 
-    public String cuartil25(String[][] matriz, int columna) {
-        int filas = contarFilas(matriz);
+    private double quitarComillas(String x) {
+        String stringWithoutQuotes = x.replaceAll("^\"|\"$", "");
+        return Double.parseDouble(stringWithoutQuotes);
+    }
+
+    public String cuartil25(int columna) {
+        int filas = contarFilas(data);
         
         String[] arr = new String[filas];
         
         for (int i = 0; i < filas; i++) {
-            arr[i] = matriz[i][columna];
+            arr[i] = data[i][columna];
         }
         
         ordenarArreglo(arr);
@@ -107,13 +112,13 @@ public class MatrizR {
         return arr[index];
     }
 
-    public String cuartil75(String[][] matriz, int columna) {
-        int filas = contarFilas(matriz);
+    public String cuartil75(int columna) {
+        int filas = contarFilas(data);
         
         String[] arr = new String[filas];
         
         for (int i = 0; i < filas; i++) {
-            arr[i] = matriz[i][columna];
+            arr[i] = data[i][columna];
         }
         
         ordenarArreglo(arr);
@@ -121,6 +126,59 @@ public class MatrizR {
         int index = (int) Math.ceil(filas * 0.75) - 1;
         
         return arr[index];
+    }
+
+    public double promedio(int columna) {
+        int filas = contarFilas(data);
+        
+        String[] arr = new String[filas];
+        
+        for (int i = 0; i < filas; i++) {
+            arr[i] = data[i][columna];
+        }  
+        
+        double[] nums = new double[filas];
+
+        for (int j = 0;j<filas;j++) {
+            nums[j] = quitarComillas(arr[j]);
+        }
+
+        double acum = 0;
+
+        for (int k = 0;k<filas;k++) {
+            acum += nums[k];
+        }
+        double fils = filas;
+        return acum/fils;
+        
+    }
+
+    public double desviacion(int columna) {
+        int filas = contarFilas(data);
+
+        double acum = 0;
+
+        double prom = promedio(columna);
+
+        String[] arr = new String[filas];
+
+        for (int i = 0; i < filas; i++) {
+            arr[i] = data[i][columna];
+        }  
+        
+        double[] nums = new double[filas];
+
+        for (int j = 0;j<filas;j++) {
+            nums[j] = quitarComillas(arr[j]);
+        }
+
+        for (int k = 0;k<filas;k++) {
+            acum = Math.pow((nums[k] - prom), 2);
+        }
+        double varianza = acum / filas;
+        double desviacionEstandar = Math.sqrt(varianza);
+
+        return desviacionEstandar;
     }
 
     public static int contarFilas(String[][] matriz) {

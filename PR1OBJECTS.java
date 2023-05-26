@@ -6,9 +6,9 @@ public class PR1OBJECTS {
     public static void main(String[] args) throws FileNotFoundException {
 
         System.out.println("<----¡Bienvenido a analiza tus DATASETS!---->");
-        CsvR selectedFile = selectFile();
+        /*CsvR selectedFile = selectFile();
         String[][] Matriztotal = nowWhat(selectedFile);
-        menuFiltrar(Matriztotal);
+        menuFiltrar(Matriztotal); */
 
 
 
@@ -18,10 +18,8 @@ public class PR1OBJECTS {
 
 
 
+        File file = new File("./3337050.csv");
 
-/*         File file = new File("./3337050.csv");
-
-        
         CsvR myArchivo = new CsvR(file);
 
         myArchivo.loadData();
@@ -31,7 +29,7 @@ public class PR1OBJECTS {
         System.out.println(data[0][2]);
         System.out.println(data[0][3]);
         System.out.println(data[0][4]);
- */
+
 
 
         
