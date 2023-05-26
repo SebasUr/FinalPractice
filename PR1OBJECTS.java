@@ -23,7 +23,7 @@ public class PR1OBJECTS {
         CsvR myArchivo = new CsvR(file);
 
         myArchivo.loadData();
-        myArchivo.imprimir();
+        //myArchivo.imprimir();
         String[][] data = myArchivo.getData();
         System.out.println(data[0][1]);
         System.out.println(data[0][2]);
