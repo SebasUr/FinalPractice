@@ -18,8 +18,7 @@ public class PR1OBJECTS {
         }
 
         String[][] FiltrarMatriz = menuFiltrar(Matriztotal);
-        Scanner hika = new Scanner(System.in);
-        int op = hika.nextInt();
+        continuarConFiltro(FiltrarMatriz);
         
 
         
