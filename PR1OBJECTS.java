@@ -6,31 +6,21 @@ public class PR1OBJECTS {
     public static void main(String[] args) throws FileNotFoundException {
 
         System.out.println("<----¡Bienvenido a analiza tus DATASETS!---->");
-        /*CsvR selectedFile = selectFile();
+        CsvR selectedFile = selectFile();
         String[][] Matriztotal = nowWhat(selectedFile);
-        menuFiltrar(Matriztotal); */
 
+        for(int i =0; i<Matriztotal.length; i++){
+            for(int j=0; j<Matriztotal[i].length-12; j++) // para saber que mtriz llevamos hasta ahora
+            {
+                System.out.print(Matriztotal[i][j] + "\t");
+            }
+            System.out.println();
+        }
 
-
-
-
-
-
-
-
-        File file = new File("./3337050.csv");
-
-        CsvR myArchivo = new CsvR(file);
-
-        myArchivo.loadData();
-        //myArchivo.imprimir();
-        String[][] data = myArchivo.getData();
-        System.out.println(data[0][1]);
-        System.out.println(data[0][2]);
-        System.out.println(data[0][3]);
-        System.out.println(data[0][4]);
-
-
+        String[][] FiltrarMatriz = menuFiltrar(Matriztotal);
+        Scanner hika = new Scanner(System.in);
+        int op = hika.nextInt();
+        
 
         
 
@@ -38,48 +28,117 @@ public class PR1OBJECTS {
 
 
 
+    }
+    public static String[][] continuarConFiltro(String[][] MatrizFiltrada){
+            Scanner in = new Scanner(System.in);
+            System.out.println("");
+            System.out.println(" -¿Quieres agregar otro filtro?-");
+            System.out.println(" 1. Sí\n 2. No");
+            int opcion = in.nextInt();
+        boolean h = true;
+        String[][] nextFiltrada = MatrizFiltrada;
+        while(h== true){
+            if (opcion ==1){
+                System.out.println("Accede acá");
+            }
+            else if (opcion == 2){
+                System.out.println("Accede allá");
+            }
+        }
+        return nextFiltrada;
 
 
 
-
-
-
-
-
-
-
-        // Analyzer CSV - Analiza todo el archivo CSS e imprime en consola todos los datos en conjunto, con sus respectivas características.
-/*         
-        CsvAnalyzer analyzer = new CsvAnalyzer(selectedFile);
-        analyzer.analyze();
- */
-        // Columna, Clase que recibe la columna y el archivo css para crear un objeto que alberga la columna y se pueden llamar métodos para ver sus características
-        
-/*         String archivoCSV = "./Medellin Agosto 2022.csv";
-        String nombreColumna = "\"TMAX\"";
-        try {
-            ColumnaCSV columna = new ColumnaCSV(nombreColumna, archivoCSV);
-            columna.imprimirColumna();
-            System.out.println("Valor máximo: " + columna.valorMaximo());
-            System.out.println("Número de datos nulos o vacíos: " + columna.contarNulos());
-        } catch (FileNotFoundException e) {
-            System.out.println("No se pudo leer el archivo CSV: " + e.getMessage());
-        } catch (IllegalArgumentException e) {
-            System.out.println(e.getMessage());
-        } */
     }
 
     
-    public static void menuFiltrar(String[][] matrizFinal){
+    public static String[][] menuFiltrar(String[][] matrizFinal){
         System.out.println();
         System.out.println("- ¿Qué columnas quieres filtrar? -");
-        System.out.println(" 1. Nombre de la estación\n 2. Rango de temperaturas \n 3. Rango de precipitación");
+        System.out.println(" 1. Nombre de la estación\n 2. Rango de temperaturas \n 3. Rango de precipitación \n 4. No deseo agregar ningún filtro");
+        boolean h = true;
+        Scanner in = new Scanner(System.in);
+        int opcion = in.nextInt();
+        String [][] matrizFiltrada = matrizFinal;
+        while(h==true){
+            if(opcion == 1){
+                System.out.println("▲▲ - FILTRANDO POR NOMBRE DE ESTACIÓN - ▲▲");
+                Scanner on = new Scanner(System.in);
+                System.out.println("Ingresa el nombre de la estación. Ej: US1CALA0036");
+                String nombre = on.nextLine();
+                on.close();
+                String nombreCo = "\"" + nombre + "\"";
+
+                matrizFiltrada = MatrizR.filtrarMatriz(matrizFinal, 0, nombreCo);
+                
+                // comprobar filtro ---- ELIMINAR LUEGO
+                for(int i =0; i<matrizFiltrada.length; i++){
+                    for(int j=0; j<matrizFiltrada[i].length-18; j++) // el length de la fila actual.
+                    {
+                        System.out.print(matrizFiltrada[i][j] + "\t");
+                    }
+                    System.out.println();
+                }
+
+                return matrizFiltrada;
+            } else if(opcion == 2){
+                System.out.println(" - FILTRANDO RANGOS PROMEDIO DE TEMPERATURA(TAVG) - ");
+                Scanner on = new Scanner(System.in);
+                System.out.println("    Ingresa el promedio mínimo por el que quieres filtrar. Ej: 0");
+                String minimo = on.nextLine();
+                System.out.println("    Ingresa el promedio máximo por el que quieres filtrar. Ej: 0");
+                String maximo = on.nextLine();
+                on.close();
+                String minEdit = "\"" + minimo + "\"";
+                String maxEdit = "\"" + maximo + "\"";
+
+                matrizFiltrada = MatrizR.filtrarMatrizPorRango(matrizFinal, 11, minEdit, maxEdit);
+
+                    // comprobar filtro ---- ELIMINAR LUEGO
+                    for(int i =0; i<matrizFiltrada.length; i++){
+                        for(int j=0; j<matrizFiltrada[i].length-15; j++) // el length de la fila actual.
+                        {
+                            System.out.print(matrizFiltrada[i][j] + "\t");
+                        }
+                        System.out.println();
+                    }
+
+                    return matrizFiltrada;
+            } else if(opcion == 3){
+                System.out.println(" - FILTRANDO RANGOS DE PRECIPITACIÓN(PRCP) - ");
+                Scanner on = new Scanner(System.in);
+                System.out.println("    Ingresa el promedio mínimo por el que quieres filtrar. Ej: 0");
+                String minimo = on.nextLine();
+                System.out.println("    Ingresa el promedio máximo por el que quieres filtrar. Ej: 0");
+                String maximo = on.nextLine();
+                on.close();
+                String minEdit = "\"" + minimo + "\"";
+                String maxEdit = "\"" + maximo + "\"";
+
+                matrizFiltrada = MatrizR.filtrarMatrizPorRango(matrizFinal, 8, minEdit, maxEdit);
+
+                    // comprobar filtro ---- ELIMINAR LUEGO
+                    for(int i =0; i<matrizFiltrada.length; i++){
+                        for(int j=0; j<matrizFiltrada[i].length-15; j++) // el length de la fila actual.
+                        {
+                            System.out.print(matrizFiltrada[i][j] + "\t");
+                        }
+                        System.out.println();
+                    }
+
+                    return matrizFiltrada;
+            } else if(opcion ==4){
+                return matrizFiltrada;
+            }
+
+        }
+        return matrizFiltrada;
     }
 
     public static String[][] nowWhat(CsvR selectedFile) throws FileNotFoundException{
         Scanner in = new Scanner(System.in);
         System.out.println("■ Escoge qué quieres hacer con el archivo ■ " + selectedFile);
-        System.out.println(" 1. Solamente quiero hacer un análisis completo del archivo\n 2. Adicionar otro archivo \n 3. Cargar un archivo distinto \n 4. Continuar con los filtro" );
+        System.out.println(" 1. Solamente quiero hacer un análisis completo del archivo\n 2. Adicionar otro archivo \n 3. Cargar un archivo distinto \n 4. Continuar con los filtros" );
         int opcion = in.nextInt();
         boolean h = true;
         selectedFile.loadData();

@@ -111,6 +111,72 @@ public class MatrizR {
         return Double.parseDouble(stringWithoutQuotes);
     }
 
+    public static String[][] filtrarMatriz(String[][] matriz, int columna, String dato) {
+        int contador = 0;
+        
+        // Contar cuántas filas coinciden con el dato proporcionado en la columna dada
+        for (int i = 0; i < matriz.length; i++) {
+            if(matriz[i][columna] != null){
+                if (matriz[i][columna].equals(dato)) {
+                    contador++;
+                }
+            }
+        }
+        
+        // Crear una nueva matriz con el tamaño adecuado
+        String[][] matrizFiltrada = new String[contador][matriz[1].length];
+        int fila = 0;
+        
+        // Copiar las filas que coinciden con el dato a la nueva matriz
+        for (int i = 0; i < matriz.length; i++) {
+            if (matriz[i][columna] != null){
+                if (matriz[i][columna].equals(dato)) {
+                    for (int j = 0; j < matriz[i].length; j++) {
+                        matrizFiltrada[fila][j] = matriz[i][j];
+                    }
+                    fila++;
+                }
+            }
+        }
+        
+        return matrizFiltrada;
+    }
+
+    public static String[][] filtrarMatrizPorRango(String[][] matriz, int columna, String rangoMenor, String rangoMayor) {
+        int contador = 0;
+/*         rangoMenor = "\"" + rangoMenor + "\"";
+        rangoMayor = "\"" + rangoMayor + "\""; */
+        
+        // Contar cuántas filas están dentro del rango especificado en la columna dada
+        for (int i = 0; i < matriz.length; i++) {
+            if(matriz[i][columna] !=null){
+                String edad = matriz[i][columna];
+                if (edad.compareTo(rangoMenor) >= 0 && edad.compareTo(rangoMayor) <= 0) {
+                    contador++;
+                }
+            }
+        }
+        
+        // Crear una nueva matriz con el tamaño adecuado
+        String[][] matrizFiltrada = new String[contador][matriz[0].length];
+        int fila = 0;
+        
+        // Copiar las filas que están dentro del rango a la nueva matriz
+        for (int i = 0; i < matriz.length; i++) {
+            if(matriz[i][columna] !=null){
+                String edad = matriz[i][columna];
+                if (edad.compareTo(rangoMenor) >= 0 && edad.compareTo(rangoMayor) <= 0) {
+                    for (int j = 0; j < matriz[i].length; j++) {
+                        matrizFiltrada[fila][j] = matriz[i][j];
+                    }
+                    fila++;
+                }
+            }
+        }
+        
+        return matrizFiltrada;
+    }
+
     public double cuartil25(int columna) {
         int filas = contarFilas(data);
         

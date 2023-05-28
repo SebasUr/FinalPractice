@@ -1,29 +1,4 @@
-   98 public static String[][] filtrarMatriz(String[][] matriz, int columna, String dato) {
-        int contador = 0;
-        
-        // Contar cuántas filas coinciden con el dato proporcionado en la columna dada
-        for (int i = 0; i < matriz.length; i++) {
-            if (matriz[i][columna].equals(dato)) {
-                contador++;
-            }
-        }
-        
-        // Crear una nueva matriz con el tamaño adecuado
-        String[][] matrizFiltrada = new String[contador][matriz[0].length];
-        int fila = 0;
-        
-        // Copiar las filas que coinciden con el dato a la nueva matriz
-        for (int i = 0; i < matriz.length; i++) {
-            if (matriz[i][columna].equals(dato)) {
-                for (int j = 0; j < matriz[i].length; j++) {
-                    matrizFiltrada[fila][j] = matriz[i][j];
-                }
-                fila++;
-            }
-        }
-        
-        return matrizFiltrada;
-    }
+   98 
 
     menu
 
