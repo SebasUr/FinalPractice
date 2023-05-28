@@ -1,0 +1,47 @@
+   98 public static String[][] filtrarMatriz(String[][] matriz, int columna, String dato) {
+        int contador = 0;
+        
+        // Contar cuántas filas coinciden con el dato proporcionado en la columna dada
+        for (int i = 0; i < matriz.length; i++) {
+            if (matriz[i][columna].equals(dato)) {
+                contador++;
+            }
+        }
+        
+        // Crear una nueva matriz con el tamaño adecuado
+        String[][] matrizFiltrada = new String[contador][matriz[0].length];
+        int fila = 0;
+        
+        // Copiar las filas que coinciden con el dato a la nueva matriz
+        for (int i = 0; i < matriz.length; i++) {
+            if (matriz[i][columna].equals(dato)) {
+                for (int j = 0; j < matriz[i].length; j++) {
+                    matrizFiltrada[fila][j] = matriz[i][j];
+                }
+                fila++;
+            }
+        }
+        
+        return matrizFiltrada;
+    }
+
+    menu
+
+            boolean h = true;
+        Scanner in = new Scanner(System.in);
+        int opcion = in.nextInt();
+        while(h==true){
+            if(opcion == 1){
+                System.out.println("Ingresa el nombre de la estación. Ej: US1CALA0036");
+                String nombre = in.nextLine();
+                String nombreCo = "\"" + nombre + "\"";
+
+                MatrizR datos = new MatrizR(matrizFinal);
+                String [][] matrizFiltrada = MatrizR.filtrarMatriz(matrizFinal, 0, nombreCo);
+                
+            }else if(opcion == 2){
+                System.out.println();
+            }
+
+        }
+
