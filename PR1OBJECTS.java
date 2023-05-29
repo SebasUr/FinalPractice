@@ -5,6 +5,15 @@ import java.util.Scanner;
 public class PR1OBJECTS {
     public static void main(String[] args) throws FileNotFoundException {
 
+        System.out.println("'########:::::'###::::'########::::'###:::::'######::'########:'########::'######:::::'###::::'##::: ##::::'###::::'##:::::::'##:::'##:'########:'########:'########::");
+        System.out.println(" ##.... ##:::'## ##:::... ##..::::'## ##:::'##... ##: ##.....::... ##..::'##... ##:::'## ##::: ###:: ##:::'## ##::: ##:::::::. ##:'##::..... ##:: ##.....:: ##.... ##:");
+        System.out.println(" ##:::: ##::'##:. ##::::: ##:::::'##:. ##:: ##:::..:: ##:::::::::: ##:::: ##:::..:::'##:. ##:: ####: ##::'##:. ##:: ##::::::::. ####::::::: ##::: ##::::::: ##:::: ##:");
+        System.out.println(" ##:::: ##:'##:::. ##:::: ##::::'##:::. ##:. ######:: ######:::::: ##::::. ######::'##:::. ##: ## ## ##:'##:::. ##: ##:::::::::. ##::::::: ##:::: ######::: ########::");
+        System.out.println(" ##:::: ##: #########:::: ##:::: #########::..... ##: ##...::::::: ##:::::..... ##: #########: ##. ####: #########: ##:::::::::: ##:::::: ##::::: ##...:::: ##.. ##:::");
+        System.out.println(" ##:::: ##: ##.... ##:::: ##:::: ##.... ##:'##::: ##: ##:::::::::: ##::::'##::: ##: ##.... ##: ##:. ###: ##.... ##: ##:::::::::: ##::::: ##:::::: ##::::::: ##::. ##::");
+        System.out.println(" ########:: ##:::: ##:::: ##:::: ##:::: ##:. ######:: ########:::: ##::::. ######:: ##:::: ##: ##::. ##: ##:::: ##: ########:::: ##:::: ########: ########: ##:::. ##:");
+        System.out.println("........:::..:::::..:::::..:::::..:::::..:::......:::........:::::..::::::......:::..:::::..::..::::..::..:::::..::........:::::..:::::........::........::..:::::..::");
+
         System.out.println("<----¡Bienvenido a analiza tus DATASETS!---->");
         CsvR selectedFile = selectFile();
         String[][] Matriztotal = nowWhat(selectedFile);
@@ -18,36 +27,51 @@ public class PR1OBJECTS {
         }
 
         String[][] FiltrarMatriz = menuFiltrar(Matriztotal);
-        continuarConFiltro(FiltrarMatriz);
-        
+        String[][] FinallyMatriz = continuarConFiltro(FiltrarMatriz);
 
-        
+        System.out.println("IMPRIMIENDO FINALMENTE LA MATRIZ");
+        for(int i =0; i<FinallyMatriz.length; i++){
+            for(int j=0; j<FinallyMatriz[i].length-16; j++) // para saber que mtriz llevamos hasta ahora
+            {
+                System.out.print(FinallyMatriz[i][j] + "\t");
+            }
+            System.out.println();
+        }
 
+        menuFuncionesFinales(FinallyMatriz);
 
 
 
 
     }
+    public static void menuFuncionesFinales(String[][] MatrizFinal){
+        System.out.println();
+        System.out.println("====== ¿Qué deseas ver o realizar con tus datos finales? ======");
+        System.out.println(" 1. Ver datos nulos de cada columna \n 2. Visualizar primeros datos del dataset \n 3. Visualizar últimos datos del dataset \n 4. Cantidad de registros y columnas \n 5. Visualizar mínimos de cada columna \n 6. Visualizar máximos de cada columna \n 7. Promedio de cada columna \n 8. Cuartiles \n 9. Imprimir mi dataset con sus filtros. \n 10. Salir");
+        System.out.println("================================================================");
+    }
+
+
     public static String[][] continuarConFiltro(String[][] MatrizFiltrada){
-            Scanner in = new Scanner(System.in);
-            System.out.println("");
-            System.out.println(" -¿Quieres agregar otro filtro?-");
-            System.out.println(" 1. Sí\n 2. No");
-            int opcion = in.nextInt();
+        Scanner in = new Scanner(System.in);
+        System.out.println("");
+        System.out.println(" -¿Quieres agregar otro filtro?-");
+        System.out.println(" 1. Sí\n 2. No");
+        int opcion = in.nextInt();
         boolean h = true;
         String[][] nextFiltrada = MatrizFiltrada;
         while(h== true){
             if (opcion ==1){
-                System.out.println("Accede acá");
+                nextFiltrada = menuFiltrar(MatrizFiltrada);
+                nextFiltrada = continuarConFiltro(nextFiltrada);
+                h = false;
             }
             else if (opcion == 2){
-                System.out.println("Accede allá");
+                System.out.println(" -:Continuando.....");
+                h=false;
             }
         }
         return nextFiltrada;
-
-
-
     }
 
     
@@ -61,11 +85,12 @@ public class PR1OBJECTS {
         String [][] matrizFiltrada = matrizFinal;
         while(h==true){
             if(opcion == 1){
+                System.out.println();
+
                 System.out.println("▲▲ - FILTRANDO POR NOMBRE DE ESTACIÓN - ▲▲");
                 Scanner on = new Scanner(System.in);
                 System.out.println("Ingresa el nombre de la estación. Ej: US1CALA0036");
                 String nombre = on.nextLine();
-                on.close();
                 String nombreCo = "\"" + nombre + "\"";
 
                 matrizFiltrada = MatrizR.filtrarMatriz(matrizFinal, 0, nombreCo);
@@ -81,13 +106,13 @@ public class PR1OBJECTS {
 
                 return matrizFiltrada;
             } else if(opcion == 2){
+                System.out.println();
                 System.out.println(" - FILTRANDO RANGOS PROMEDIO DE TEMPERATURA(TAVG) - ");
                 Scanner on = new Scanner(System.in);
                 System.out.println("    Ingresa el promedio mínimo por el que quieres filtrar. Ej: 0");
                 String minimo = on.nextLine();
                 System.out.println("    Ingresa el promedio máximo por el que quieres filtrar. Ej: 0");
                 String maximo = on.nextLine();
-                on.close();
                 String minEdit = "\"" + minimo + "\"";
                 String maxEdit = "\"" + maximo + "\"";
 
@@ -104,13 +129,14 @@ public class PR1OBJECTS {
 
                     return matrizFiltrada;
             } else if(opcion == 3){
+                System.out.println();
+
                 System.out.println(" - FILTRANDO RANGOS DE PRECIPITACIÓN(PRCP) - ");
                 Scanner on = new Scanner(System.in);
                 System.out.println("    Ingresa el promedio mínimo por el que quieres filtrar. Ej: 0");
                 String minimo = on.nextLine();
                 System.out.println("    Ingresa el promedio máximo por el que quieres filtrar. Ej: 0");
                 String maximo = on.nextLine();
-                on.close();
                 String minEdit = "\"" + minimo + "\"";
                 String maxEdit = "\"" + maximo + "\"";
 

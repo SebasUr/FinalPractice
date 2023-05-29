@@ -30,14 +30,12 @@ Se abre Menú de navegación que incluirá:
 		|2.Quitar un filtro
 		|3. Continuar
 		|4. Salir.
-			|1.Ver datos nulos de cada columna
-			|2.Visualizar primeros datos del dataset
-			|3.Visualizar últimos datos del dataset
-			|4.Cantidad de registros y columnas
-			|5.Visualizar mínimos de cada columna
-			|6. Visualizar máximos de cada columna
+			|1.Ver datos nulos de cada columna \n 2.Visualizar primeros datos del dataset \n 3.Visualizar últimos datos del dataset \n 4.Cantidad de registros y columnas \n 5.Visualizar mínimos de cada columna \n 6. Visualizar máximos de cada columna \n 7. Promedio de cada columna \n 8. Cuartiles \n 9. Imprimir mi dataset con sus filtros. \n 10. Salir
+			|
+			|
+			|6. Visualizar máximos de cada columna \n 7. Promedio de cada columna \n 8. Cuartiles \n 9. Imprimir mi dataset con sus filtros. \n 10. Salir
 			|7. promedio de cada columna
-			|8. Cuartiles
+			|
 			|9. Imprimir mi dataset con sus filtros.
 				|25%
 				|50%
