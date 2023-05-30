@@ -1,5 +1,6 @@
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 import javax.naming.ldap.ControlFactory;
@@ -60,7 +61,19 @@ public class PR1OBJECTS {
         System.out.println(" 1. Ver datos nulos de cada columna \n 2. Visualizar primeros datos del dataset \n 3. Visualizar últimos datos del dataset \n 4. Cantidad de registros y columnas \n 5. Visualizar mínimos y máximos de cada colúmna \n 6. Promedio de cada columna \n 7. Cuartiles \n 8. Desviación estándar \n 9. Imprimir mi dataset con sus filtros. \n 10. Salir");
         System.out.println("================================================================");
         System.out.print("  |=====> ");
-        int opcion = in.nextInt();
+        int opcion = 0;
+        boolean isInputValid = false;
+
+        while (!isInputValid) {
+            try {
+                opcion = in.nextInt();
+                isInputValid = true;
+            } catch (InputMismatchException e) {
+                System.out.println("Error: Debes ingresar un número válido.");
+                System.out.print("  |=====> ");
+                in.nextLine();
+            }
+        }
         if (opcion >10 || opcion <1) {
             System.out.println("  -Ingrese como respuesta el número de la opción que desea elegir-");
             System.out.print("  |=====> ");
@@ -155,7 +168,19 @@ public class PR1OBJECTS {
         System.out.println(" -¿Quieres agregar otro filtro?-");
         System.out.println(" 1. Sí\n 2. No");
         System.out.print("  |=====> ");
-        int opcion = in.nextInt();
+        int opcion = 0;
+        boolean isInputValid = false;
+
+        while (!isInputValid) {
+            try {
+                opcion = in.nextInt();
+                isInputValid = true;
+            } catch (InputMismatchException e) {
+                System.out.println("Error: Debes ingresar un número válido.");
+                System.out.print("  |=====> ");
+                in.nextLine();
+            }
+        }
         if (opcion >2 || opcion <1) {
             System.out.println("  -Ingrese como respuesta el número de la opción que desea elegir-");
             System.out.print("  |=====> ");
@@ -185,7 +210,19 @@ public class PR1OBJECTS {
         System.out.print("  |=====> ");
         boolean h = true;
         Scanner in = new Scanner(System.in);
-        int opcion = in.nextInt();
+        int opcion = 0;
+        boolean isInputValid = false;
+
+        while (!isInputValid) {
+            try {
+                opcion = in.nextInt();
+                isInputValid = true;
+            } catch (InputMismatchException e) {
+                System.out.println("Error: Debes ingresar un número válido.");
+                System.out.print("  |=====> ");
+                in.nextLine();
+            }
+        }
         if (opcion >4 || opcion <1) {
             System.out.println("  -Ingrese como respuesta el número de la opción que desea elegir-");
             System.out.print("  |=====> ");
@@ -269,12 +306,29 @@ public class PR1OBJECTS {
         return matrizFiltrada;
     }
 
-    public static String[][] nowWhat(CsvR selectedFile) throws FileNotFoundException{
+    public static String[][] nowWhat(CsvR selectedFile) throws FileNotFoundException {
         Scanner in = new Scanner(System.in);
         System.out.println("■ Escoge qué quieres hacer con el archivo ■ " + selectedFile);
         System.out.println(" 1. Adicionar otro archivo \n 2. Cargar un archivo distinto \n 3. Continuar con los filtros" );
         System.out.print("  |=====> ");
-        int opcion = in.nextInt();
+        int opcion = 0;
+        boolean isInputValid = false;
+
+        while (!isInputValid) {
+            try {
+                opcion = in.nextInt();
+                isInputValid = true;
+            } catch (InputMismatchException e) {
+                System.out.println("Error: Debes ingresar un número válido.");
+                System.out.print("  |=====> ");
+                in.nextLine();
+            }
+        }
+        if(opcion>3 || opcion<=0){
+            System.out.println("Introduzca un número válido.");
+            System.out.print("  |=====> ");
+            opcion = in.nextInt();
+        }
         boolean h = true;
         selectedFile.loadData();
         String [][] FileActual = selectedFile.getData(); 
@@ -297,11 +351,7 @@ public class PR1OBJECTS {
                 System.out.println();
                 return FileActual;
             }
-            else if(opcion>3 || opcion<=0){
-                System.out.println("Introduzca un número válido.");
-                System.out.print("  |=====> ");
-                opcion = in.nextInt();
-            }
+            
         }
         return FileActual;
         
@@ -316,7 +366,24 @@ public class PR1OBJECTS {
         System.out.println(" 1. Estado de california (1) \n 2. Estado de Washington  \n 3. Estado de California (2) \n 4. Cargar un archivo diferente\n 5. Salir");
         System.out.println("<------------------------------------------->");
         System.out.print("  |=====> ");
-        int opcion = in.nextInt();
+        int opcion = 0;
+        boolean isInputValid = false;
+
+        while (!isInputValid) {
+            try {
+                opcion = in.nextInt();
+                isInputValid = true;
+            } catch (InputMismatchException e) {
+                System.out.println("Error: Debes ingresar un número válido.");
+                System.out.print("  |=====> ");
+                in.nextLine();
+            }
+        }
+        if(opcion>5 || opcion<=0){
+            System.out.println("Introduzca un número válido.");
+            System.out.print("  |=====> ");
+            opcion = in.nextInt();
+        }
         File selectedFile = new File("./3337050.csv");
         boolean h = true;
         CsvR csvArchivo = new CsvR(selectedFile); 
@@ -355,11 +422,6 @@ public class PR1OBJECTS {
             }else if(opcion==5){
                 System.exit(0);
                 h=false;
-            }
-            else if(opcion>5 || opcion<=0){
-                System.out.println("Introduzca un número válido.");
-                System.out.print("  |=====> ");
-                opcion = in.nextInt();
             }
         }
         return csvArchivo;
