@@ -1,8 +1,14 @@
+import javax.print.DocFlavor.STRING;
+
 public class MatrizR {
     private String[][] data;
 
     public MatrizR(String[][] data){
         this.data = data;
+    }
+
+    public String[][] getMatriz() {
+        return this.data;
     }
 
     public void imprimir(){
@@ -15,26 +21,26 @@ public class MatrizR {
         }
     }
 
-    public String contarNulosYVacios(int columna, String[][] matriz) {
+    public String contarNulosYVacios(int columna, String name) {
         int variable = 0;
         int contadorVac = 0;
-        for (int i = 0;i<matriz.length;i++) {
-            if (matriz[i][columna] == null) {
+        for (int i = 0;i<data.length;i++) {
+            if (data[i][columna] == null) {
                 variable+=1;
             }
-            else if (matriz[i][columna].isEmpty() || matriz[i][columna].equals("")) {
+            else if (data[i][columna].isEmpty() || data[i][columna].equals("")) {
                 contadorVac+=1;
             }
         }
-        return "La columna " + matriz[0][columna] + " tiene " + variable + " nulos"+ " y tiene " + contadorVac + " vacios.";
+        return "La columna " + name + " tiene " + variable + " nulos"+ " y tiene " + contadorVac + " vacios.";
     }
 
-    public String maxPerColumn(int columna, String[][] matriz){
+    public String maxPerColumn(int columna, String name){
         float max = 0;
         
-        for (int i = 0;i<matriz.length;i++) {
-            if(matriz[i][columna] != null && !matriz[i][columna].isEmpty() && !matriz[i][columna].equals("")){
-                String datostring = matriz[i][columna];
+        for (int i = 0;i<data.length;i++) {
+            if(data[i][columna] != null && !data[i][columna].isEmpty() && !data[i][columna].equals("")){
+                String datostring = data[i][columna];
                 String numstring = "";
                 for (int j = 0; j < datostring.length(); j++) {
                     char c = datostring.charAt(j);
@@ -54,9 +60,9 @@ public class MatrizR {
         }
         float count = max;
         float min = 0;
-        for (int i = 0;i<matriz.length;i++) {
-            if(matriz[i][columna] != null && !matriz[i][columna].isEmpty() && !matriz[i][columna].equals("")){
-                String datostring = matriz[i][columna];
+        for (int i = 0;i<data.length;i++) {
+            if(data[i][columna] != null && !data[i][columna].isEmpty() && !data[i][columna].equals("")){
+                String datostring = data[i][columna];
                 String numstring = "";
                 for (int j = 0; j < datostring.length(); j++) {
                     char c = datostring.charAt(j);
@@ -76,7 +82,7 @@ public class MatrizR {
                 
             }
         }
-        return "La columna " + matriz[0][columna] + " tiene como número máximo " + max + " y " + min + " como número mínimo."; 
+        return "La columna " + name + " tiene como número máximo " + max + " y " + min + " como número mínimo."; 
     }
 
     private int nulosArreglo(String[] arr) {
@@ -177,7 +183,7 @@ public class MatrizR {
         return matrizFiltrada;
     }
 
-    public double cuartil25(int columna) {
+    public void cuartil(int columna, String name) {
         int filas = contarFilas(data);
         
         String[] arr = new String[filas];
@@ -207,45 +213,18 @@ public class MatrizR {
         
         ordenarArreglo(nums);
         
-        int index = (int) Math.ceil(longi * 0.25) - 1; 
+        int index = (int) Math.ceil(longi * 0.25) - 1;
+        int index2 = (int) Math.ceil(longi * 0.75) - 1; 
         
-        return nums[index];
+        if (nums.length > 0) {
+            System.out.println("En la columna " + name + " el primer cuartil es: " + nums[index] + " Y el tercer cuartil es: " + nums[index2]);
+        } else {
+            System.out.println("La columna " + name + " no tiene cuartiles debido a que es nula o vacía");
+
+        }
+        
     }
 
-    public double cuartil75(int columna) {
-        int filas = contarFilas(data);
-        
-        String[] arr = new String[filas];
-        
-        for (int i = 0; i < filas; i++) {
-            arr[i] = data[i][columna];
-        }
-
-        int nuls = nulosArreglo(arr);
-        int longi = (filas - nuls);
-        String[] arr2 = new String[longi];
-
-        int contador = 0;
-
-        for (int l = 0;l<filas;l++) {
-            if (!(arr[l] == null  || arr[l].isEmpty() || arr[l].equals(""))) {
-                arr2[contador] = arr[l];
-                contador++;
-            }
-        }
-
-        double[] nums = new double[longi];
-
-        for (int j = 0;j<longi;j++) {
-            nums[j] = quitarComillas(arr2[j]);
-        }
-        
-        ordenarArreglo(nums);
-        
-        int index = (int) Math.ceil(longi * 0.75) - 1; 
-        
-        return nums[index];
-    }
 
     public double promedio(int columna) {
         int filas = contarFilas(data);
@@ -322,7 +301,9 @@ public class MatrizR {
         }
         double varianza = acum / longi;
         double desviacionEstandar = Math.sqrt(varianza);
-
+        if (Double.isNaN(desviacionEstandar)) {
+            desviacionEstandar = 999999;
+        } 
         return desviacionEstandar;
     }
 
@@ -338,6 +319,78 @@ public class MatrizR {
             return 0;
         }
         return matriz[0].length;
+    }
+
+    public String promedioG(int columna, String name) {
+        int filas = contarFilas(data);
+        
+        String[] arr = new String[filas];
+        
+        for (int i = 0; i < filas; i++) {
+            arr[i] = data[i][columna];
+        }
+
+        int nuls = nulosArreglo(arr);
+        int longi = (filas - nuls);
+        String[] arr2 = new String[longi];
+
+        int contador = 0;
+
+        for (int l = 0;l<filas;l++) {
+            if (!(arr[l] == null  || arr[l].isEmpty() || arr[l].equals(""))) {
+                arr2[contador] = arr[l];
+                contador++;
+            }
+        }
+        
+        double[] nums = new double[longi];
+
+        for (int j = 0;j<longi;j++) {
+            nums[j] = quitarComillas(arr2[j]);
+        }
+
+        double acum = 0;
+
+        for (int k = 0;k<longi;k++) {
+            acum += nums[k];
+        }
+        double resp = acum/filas;
+        if (acum == 0) {
+            resp = 0;
+        } 
+        return "El promedio de la columna " + name + " es: " + resp;
+        
+    }
+
+    public String[][] filtrarPrimeros() {
+        int filas = Math.min(5, data.length);
+        int columnas = data[0].length; 
+    
+        String[][] matrizNueva = new String[filas][columnas];
+    
+        for (int i = 0; i < filas; i++) {
+            for (int j = 0; j < columnas; j++) {
+                matrizNueva[i][j] = data[i][j];
+            }
+        }
+    
+        return matrizNueva;
+    }
+
+    public String[][] filtrarUltimos() {
+        int filas = Math.min(5, data.length); 
+        int columnas = data[0].length; 
+        int inicio = data.length - filas;  
+    
+        String[][] matrizNueva = new String[filas][columnas];
+    
+        for (int i = 0; i < filas; i++) {
+            for (int j = 0; j < columnas; j++) {
+                matrizNueva[i][j] = data[inicio + i][j];
+            }
+        }
+    
+        return matrizNueva;
     }
 
 }

@@ -2,6 +2,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
+import javax.naming.ldap.ControlFactory;
+
 public class PR1OBJECTS {
     public static void main(String[] args) throws FileNotFoundException {
 
@@ -17,6 +19,10 @@ public class PR1OBJECTS {
         System.out.println("<----¡Bienvenido a analiza tus DATASETS!---->");
         CsvR selectedFile = selectFile();
         String[][] Matriztotal = nowWhat(selectedFile);
+        String[] primeraFila = new String[Matriztotal[0].length];
+        for (int i = 0; i < (Matriztotal[0].length); i++) {
+            primeraFila[i] = Matriztotal[0][i];
+        }
 
         for(int i =0; i<Matriztotal.length; i++){
             for(int j=0; j<Matriztotal[i].length-12; j++) // para saber que mtriz llevamos hasta ahora
@@ -37,18 +43,93 @@ public class PR1OBJECTS {
             }
             System.out.println();
         }
+        
+        MatrizR LastMatriz = new MatrizR(FinallyMatriz);
 
-        menuFuncionesFinales(FinallyMatriz);
+        menuFuncionesFinales(LastMatriz, primeraFila);
 
 
 
 
     }
-    public static void menuFuncionesFinales(String[][] MatrizFinal){
+    public static void menuFuncionesFinales(MatrizR matriz, String[] primeraFila){
+        String[][] data = matriz.getMatriz();
+        Scanner in = new Scanner(System.in);
         System.out.println();
         System.out.println("====== ¿Qué deseas ver o realizar con tus datos finales? ======");
-        System.out.println(" 1. Ver datos nulos de cada columna \n 2. Visualizar primeros datos del dataset \n 3. Visualizar últimos datos del dataset \n 4. Cantidad de registros y columnas \n 5. Visualizar mínimos de cada columna \n 6. Visualizar máximos de cada columna \n 7. Promedio de cada columna \n 8. Cuartiles \n 9. Imprimir mi dataset con sus filtros. \n 10. Salir");
+        System.out.println(" 1. Ver datos nulos de cada columna \n 2. Visualizar primeros datos del dataset \n 3. Visualizar últimos datos del dataset \n 4. Cantidad de registros y columnas \n 5. Visualizar mínimos y máximos de cada colúmna \n 6. Promedio de cada columna \n 7. Cuartiles \n 8. Desviación estándar \n 9. Imprimir mi dataset con sus filtros. \n 10. Salir");
         System.out.println("================================================================");
+        int opcion = in.nextInt();
+        boolean h = true;
+        while (h==true) {
+            if (opcion == 1) {
+                for (int i =4;i<(data[0].length);i++) {
+                    System.out.println(matriz.contarNulosYVacios(i, primeraFila[i]));
+                }
+                h = false;
+            } else if (opcion == 2) { 
+                String[][] nueva = matriz.filtrarPrimeros();
+                for(int i =0; i<nueva.length; i++){
+                    for(int j=0; j<nueva[i].length; j++)
+                    {
+                        System.out.print(nueva[i][j] + " ");
+                    }
+                    System.out.println();
+                }
+                h=false;
+            } else if (opcion == 3) {
+                String[][] nueva = matriz.filtrarUltimos();
+                for(int i =0; i<nueva.length; i++){
+                    for(int j=0; j<nueva[i].length; j++)
+                    {
+                        System.out.print(nueva[i][j] + " ");
+                    }
+                    System.out.println();
+                }
+                h = false;
+            } else if (opcion == 4) {
+                System.out.println("El número de registros es: " + data.length + " y el número de colúmnas es: " + data[0].length);
+                h=false;
+            } else if (opcion == 5) {
+                for (int i = 4;i<data[0].length;i++) {
+                    System.out.println(matriz.maxPerColumn(i, primeraFila[i]));
+                }
+                h = false;
+            } else if (opcion == 6) {
+                for (int i = 4;i<data[0].length;i++) {
+                    System.out.println(matriz.promedioG(i, primeraFila[i]));
+                }
+                h = false;
+            } else if (opcion == 7) {
+                for (int i = 4;i<data[0].length;i++) {
+                    matriz.cuartil(i, primeraFila[i]);
+                }
+                h = false;
+            } else if (opcion == 8) {
+                for (int i = 4;i<data[0].length;i++) {
+                    double desv = matriz.desviacion(i);
+                    if (desv == 999999) {
+                        System.out.println("En la columna " + primeraFila[i] + " no se puede calcular la desviación estándar debido a que es nula o vacía");
+                    } else {
+                        System.out.println("En la columna "+ primeraFila[i] + " la desviación estándar es " + desv);
+                    }
+                }
+                h = false;
+            } else if (opcion == 9) {
+                for(int i =0; i<data.length; i++){
+                    for(int j=0; j<data[i].length; j++)
+                    {
+                        System.out.print(data[i][j] + " ");
+                    }
+                    System.out.println();
+                }
+                h = false;
+            } else if (opcion == 10) {
+                System.out.println(" -:Finalizando.....");
+                h=false;
+            }
+        }
+
     }
 
 
@@ -168,6 +249,7 @@ public class PR1OBJECTS {
         boolean h = true;
         selectedFile.loadData();
         String [][] FileActual = selectedFile.getData(); 
+
 
         while(h==true){
             if(opcion==1){
