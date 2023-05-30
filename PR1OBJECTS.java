@@ -8,15 +8,15 @@ import javax.naming.ldap.ControlFactory;
 public class PR1OBJECTS {
     public static void main(String[] args) throws FileNotFoundException {
 
-        System.out.println("'########:::::'###::::'########::::'###:::::'######::'########:'########::'######:::::'###::::'##::: ##::::'###::::'##:::::::'##:::'##:'########:'########:'########::");
-        System.out.println(" ##.... ##:::'## ##:::... ##..::::'## ##:::'##... ##: ##.....::... ##..::'##... ##:::'## ##::: ###:: ##:::'## ##::: ##:::::::. ##:'##::..... ##:: ##.....:: ##.... ##:");
-        System.out.println(" ##:::: ##::'##:. ##::::: ##:::::'##:. ##:: ##:::..:: ##:::::::::: ##:::: ##:::..:::'##:. ##:: ####: ##::'##:. ##:: ##::::::::. ####::::::: ##::: ##::::::: ##:::: ##:");
-        System.out.println(" ##:::: ##:'##:::. ##:::: ##::::'##:::. ##:. ######:: ######:::::: ##::::. ######::'##:::. ##: ## ## ##:'##:::. ##: ##:::::::::. ##::::::: ##:::: ######::: ########::");
-        System.out.println(" ##:::: ##: #########:::: ##:::: #########::..... ##: ##...::::::: ##:::::..... ##: #########: ##. ####: #########: ##:::::::::: ##:::::: ##::::: ##...:::: ##.. ##:::");
-        System.out.println(" ##:::: ##: ##.... ##:::: ##:::: ##.... ##:'##::: ##: ##:::::::::: ##::::'##::: ##: ##.... ##: ##:. ###: ##.... ##: ##:::::::::: ##::::: ##:::::: ##::::::: ##::. ##::");
-        System.out.println(" ########:: ##:::: ##:::: ##:::: ##:::: ##:. ######:: ########:::: ##::::. ######:: ##:::: ##: ##::. ##: ##:::: ##: ########:::: ##:::: ########: ########: ##:::. ##:");
-        System.out.println("........:::..:::::..:::::..:::::..:::::..:::......:::........:::::..::::::......:::..:::::..::..::::..::..:::::..::........:::::..:::::........::........::..:::::..::");
+        System.out.println(" .d8b.  d8b   db  .d8b.  db    db    db d88888D d88888b d8888b. ");
+        System.out.println("d8' `8b 888o  88 d8' `8b 88    `8b  d8' YP  d8' 88'     88  `8D ");
+        System.out.println("88ooo88 88V8o 88 88ooo88 88     `8bd8'     d8'  88ooooo 88oobY' ");
+        System.out.println("88~~~88 88 V8o88 88~~~88 88       88      d8'   88~~~~~ 88`8b   ");
+        System.out.println("88   88 88  V888 88   88 88booo.  88     d8' db 88.     88 `88. ");
+        System.out.println("YP   YP VP   V8P YP   YP Y88888P  YP    d88888P Y88888P 88   YD ");
 
+        System.out.println();
+                // LLAMAMOS FUNCIONES DEL MENÚ
         System.out.println("<----¡Bienvenido a analiza tus DATASETS!---->");
         CsvR selectedFile = selectFile();
         String[][] Matriztotal = nowWhat(selectedFile);
@@ -34,7 +34,7 @@ public class PR1OBJECTS {
         }
 
         String[][] FiltrarMatriz = menuFiltrar(Matriztotal);
-        String[][] FinallyMatriz = continuarConFiltro(FiltrarMatriz);
+        String[][] FinallyMatriz = continuarConFiltro(FiltrarMatriz, Matriztotal);
 
         System.out.println("IMPRIMIENDO FINALMENTE LA MATRIZ");
         for(int i =0; i<FinallyMatriz.length; i++){
@@ -46,13 +46,18 @@ public class PR1OBJECTS {
         }
         
         MatrizR LastMatriz = new MatrizR(FinallyMatriz);
-
+        if(LastMatriz.getMatriz().length<=0){
+            System.out.println("TE QUEDASTE SIN DATOS! POR FAVOR INICIA NUEVAMENTE EL PROGRAMA.");
+        } else {
         menuFuncionesFinales(LastMatriz, primeraFila);
+    }
 
 
 
 
     }
+
+    // MENÚ PARA FUNCIONES FINALES CON LA MATRIZ TOTALMENTE FILTRADA
     public static void menuFuncionesFinales(MatrizR matriz, String[] primeraFila){
         String[][] data = matriz.getMatriz();
         Scanner in = new Scanner(System.in);
@@ -64,7 +69,7 @@ public class PR1OBJECTS {
         int opcion = 0;
         boolean isInputValid = false;
 
-        while (!isInputValid) {
+        while (!isInputValid) { // VALIDACIÓN DE LETRAS Y NUMEROS INVÁLIDOS
             try {
                 opcion = in.nextInt();
                 isInputValid = true;
@@ -110,6 +115,7 @@ public class PR1OBJECTS {
                 menuFuncionesFinales(matriz, primeraFila);
                 h = false;
             } else if (opcion == 4) {
+                System.out.println();
                 System.out.println("El número de registros es: " + data.length + " y el número de colúmnas es: " + data[0].length);
                 menuFuncionesFinales(matriz, primeraFila);
                 h=false;
@@ -154,24 +160,24 @@ public class PR1OBJECTS {
                 menuFuncionesFinales(matriz, primeraFila);
                 h = false;
             } else if (opcion == 10) {
-                System.out.println(" =====>Finalizando.....");
+                System.out.println("    =====> Finalizando.....");
                 h=false;
             }
         }
 
     }
 
-
-    public static String[][] continuarConFiltro(String[][] MatrizFiltrada){
+// menú para confirmar filtros
+    public static String[][] continuarConFiltro(String[][] MatrizFiltrada, String[][] MatrizSinCambios){
         Scanner in = new Scanner(System.in);
         System.out.println("");
-        System.out.println(" -¿Quieres agregar otro filtro?-");
-        System.out.println(" 1. Sí\n 2. No");
+        System.out.println(" -¿Quieres agregar otro filtro? (¡Si no has agregado puedes arrepentirte!)-");
+        System.out.println(" 1. Sí\n 2. No \n 3. Quiero descartar mis filtros actuales y poner otros o cambiarlos. \n 4. Quiero descartar los filtros y continuar.");
         System.out.print("  |=====> ");
         int opcion = 0;
         boolean isInputValid = false;
 
-        while (!isInputValid) {
+        while (!isInputValid) { // Validación de letras y nuúmeros i nválidos
             try {
                 opcion = in.nextInt();
                 isInputValid = true;
@@ -181,21 +187,32 @@ public class PR1OBJECTS {
                 in.nextLine();
             }
         }
-        if (opcion >2 || opcion <1) {
+        if (opcion >4 || opcion <1) {
             System.out.println("  -Ingrese como respuesta el número de la opción que desea elegir-");
             System.out.print("  |=====> ");
             opcion = in.nextInt();
         }
-        boolean h = true;
+
+
+        boolean h = true; // Para romper el ciclo
         String[][] nextFiltrada = MatrizFiltrada;
         while(h== true){
             if (opcion ==1){
-                nextFiltrada = menuFiltrar(MatrizFiltrada);
-                nextFiltrada = continuarConFiltro(nextFiltrada);
+                nextFiltrada = menuFiltrar(MatrizFiltrada); // Se vuelven a llamar los menús y se retorna posteriormente la nueva matriz
+                nextFiltrada = continuarConFiltro(nextFiltrada, MatrizSinCambios); // Recursividad
                 h = false;
             }
             else if (opcion == 2){
                 System.out.println(" -:Continuando.....");
+                h=false;
+            }
+            else if (opcion == 3){
+                nextFiltrada = menuFiltrar(MatrizSinCambios); // Se vuelven a llamar los menús y se retorna posteriormente la nueva matriz (Ahora con la primera matriz)
+                nextFiltrada = continuarConFiltro(nextFiltrada, MatrizSinCambios); // Recursividad
+                h = false;
+            }
+            else if(opcion == 4){
+                nextFiltrada = MatrizSinCambios;
                 h=false;
             }
         }
@@ -203,7 +220,7 @@ public class PR1OBJECTS {
     }
 
     
-    public static String[][] menuFiltrar(String[][] matrizFinal){
+    public static String[][] menuFiltrar(String[][] matrizFinal){ // Menú para filtrar nuestra matriz
         System.out.println();
         System.out.println("- ¿Qué columnas quieres filtrar? -");
         System.out.println(" 1. Nombre de la estación\n 2. Rango de temperaturas \n 3. Rango de precipitación \n 4. No deseo agregar ningún filtro");
@@ -213,7 +230,7 @@ public class PR1OBJECTS {
         int opcion = 0;
         boolean isInputValid = false;
 
-        while (!isInputValid) {
+        while (!isInputValid) { // Validación de números o letras inválidas
             try {
                 opcion = in.nextInt();
                 isInputValid = true;
@@ -233,9 +250,10 @@ public class PR1OBJECTS {
             if(opcion == 1){
                 System.out.println();
 
-                System.out.println("▲▲ - FILTRANDO POR NOMBRE DE ESTACIÓN - ▲▲");
+                System.out.println("//- FILTRANDO POR NOMBRE DE ESTACIÓN -//");
                 Scanner on = new Scanner(System.in);
                 System.out.println("Ingresa el nombre de la estación. Ej: US1CALA0036");
+                System.out.print("  |=====> ");
                 String nombre = on.nextLine();
                 String nombreCo = "\"" + nombre + "\"";
 
@@ -243,7 +261,7 @@ public class PR1OBJECTS {
                 
                 // comprobar filtro ---- ELIMINAR LUEGO
                 for(int i =0; i<matrizFiltrada.length; i++){
-                    for(int j=0; j<matrizFiltrada[i].length-18; j++) // el length de la fila actual.
+                    for(int j=0; j<matrizFiltrada[i].length-18; j++) // Comprobar matriz que se lleva hasta ahora
                     {
                         System.out.print(matrizFiltrada[i][j] + "\t");
                     }
@@ -256,17 +274,19 @@ public class PR1OBJECTS {
                 System.out.println(" - FILTRANDO RANGOS PROMEDIO DE TEMPERATURA(TAVG) - ");
                 Scanner on = new Scanner(System.in);
                 System.out.println("    Ingresa el promedio mínimo por el que quieres filtrar. Ej: 0");
+                System.out.print("  |=====> ");
                 String minimo = on.nextLine();
                 System.out.println("    Ingresa el promedio máximo por el que quieres filtrar. Ej: 0");
+                System.out.print("  |=====> ");
                 String maximo = on.nextLine();
-                String minEdit = "\"" + minimo + "\"";
+                String minEdit = "\"" + minimo + "\""; // Ponemos dentro de comillas pues en los csv se encuentra así.
                 String maxEdit = "\"" + maximo + "\"";
 
                 matrizFiltrada = MatrizR.filtrarMatrizPorRango(matrizFinal, 11, minEdit, maxEdit);
 
                     // comprobar filtro ---- ELIMINAR LUEGO
                     for(int i =0; i<matrizFiltrada.length; i++){
-                        for(int j=0; j<matrizFiltrada[i].length-15; j++) // el length de la fila actual.
+                        for(int j=0; j<matrizFiltrada[i].length-15; j++) // Comprobar matriz que se lleva hasta ahora
                         {
                             System.out.print(matrizFiltrada[i][j] + "\t");
                         }
@@ -290,7 +310,7 @@ public class PR1OBJECTS {
 
                     // comprobar filtro ---- ELIMINAR LUEGO
                     for(int i =0; i<matrizFiltrada.length; i++){
-                        for(int j=0; j<matrizFiltrada[i].length-15; j++) // el length de la fila actual.
+                        for(int j=0; j<matrizFiltrada[i].length-15; j++) // Comprobar matriz que se lleva hasta ahora
                         {
                             System.out.print(matrizFiltrada[i][j] + "\t");
                         }
@@ -306,10 +326,12 @@ public class PR1OBJECTS {
         return matrizFiltrada;
     }
 
+    // Menú para adicionar, cambiar o seguir con el archivo
     public static String[][] nowWhat(CsvR selectedFile) throws FileNotFoundException {
         Scanner in = new Scanner(System.in);
-        System.out.println("■ Escoge qué quieres hacer con el archivo ■ " + selectedFile);
+        System.out.println(" ■ Escoge qué quieres hacer con el archivo ■ ");
         System.out.println(" 1. Adicionar otro archivo \n 2. Cargar un archivo distinto \n 3. Continuar con los filtros" );
+        System.out.println(" ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■" );
         System.out.print("  |=====> ");
         int opcion = 0;
         boolean isInputValid = false;
@@ -339,7 +361,7 @@ public class PR1OBJECTS {
                 CsvR Archivoadicional = selectFile();
                 Archivoadicional.loadData();
                 String[][] matrizAdicional = Archivoadicional.getData();
-                FileActual = Archivoadicional.combinarMatrices(FileActual,matrizAdicional);
+                FileActual = Archivoadicional.combinarMatricesConExcepcion(FileActual,matrizAdicional);
                 h=false;
 
             }else if(opcion==2){
@@ -347,6 +369,7 @@ public class PR1OBJECTS {
                 nowWhat(selectedFile);
                 h = false;
             }else if(opcion==3){
+                System.out.println();
                 System.out.println("Continuando...");
                 System.out.println();
                 return FileActual;
@@ -356,14 +379,15 @@ public class PR1OBJECTS {
         return FileActual;
         
     }
-
+// Menú para seleccionar archivo
     public static CsvR selectFile() throws FileNotFoundException{
         File file1 = new File("./3337050.csv");
         File file2 = new File("./3337063.csv");
         File file3 = new File("./3337045.csv");
         Scanner in = new Scanner(System.in);
+        System.out.println("");
         System.out.println("        Escoge tu archivo a cargar: ");
-        System.out.println(" 1. Estado de california (1) \n 2. Estado de Washington  \n 3. Estado de California (2) \n 4. Cargar un archivo diferente\n 5. Salir");
+        System.out.println(" 1. San Francisco y sus alrededores \n 2. Los Angeles y sus alrededores  \n 3. Seattle y sus alrededores \n 4. Cargar un archivo diferente\n 5. Salir");
         System.out.println("<------------------------------------------->");
         System.out.print("  |=====> ");
         int opcion = 0;
@@ -392,21 +416,21 @@ public class PR1OBJECTS {
         while(h==true){
             if(opcion==1){
                 System.out.println();
-                System.out.println("    Cargando archivo del Estado de california (1)...");
+                System.out.println("    Cargando archivo de San Francisco y sus alrededores... ");
                 System.out.println();
                 selectedFile = file1;
                 csvArchivo = new CsvR(selectedFile); 
                 h=false;
             }else if(opcion==2){
                 System.out.println();
-                System.out.println("    Cargando archivo del Estado de Washington...");
+                System.out.println("    Cargando archivo de Los Angeles y sus alrededores...");
                 System.out.println();
                 selectedFile = file2;
                 csvArchivo = new CsvR(selectedFile); 
                 h=false;
             }else if(opcion==3){
                 System.out.println();
-                System.out.println("    Cargando archivo del Estado de California (2)...");
+                System.out.println("    Cargando archivo de Seattle y sus alrededores...");
                 System.out.println();
                 selectedFile = file3;
                 csvArchivo = new CsvR(selectedFile); 

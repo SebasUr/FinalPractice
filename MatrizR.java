@@ -1,5 +1,7 @@
 import javax.print.DocFlavor.STRING;
 
+// Clase que nos ofrece distintos métodos para manipular matrices.
+
 public class MatrizR {
     private String[][] data;
 

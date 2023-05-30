@@ -2,6 +2,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
+// Clase que permite convertir nuestros csv en matrices.
 public class CsvR {
     private String[][] data;
     private File file;
@@ -123,6 +124,33 @@ public class CsvR {
             }
         }
 
+        return matrizCombinada;
+    }
+
+    public String[][] combinarMatricesConExcepcion(String[][] matriz1, String[][] matriz2) {
+        int filas1 = matriz1.length;
+        int columnas1 = matriz1[0].length;
+        int filas2 = matriz2.length;
+        int columnas2 = matriz2[0].length;
+    
+        if (filas2 <= 1) {
+            throw new IllegalArgumentException("La matriz2 debe tener al menos una fila adicional.");
+        }
+    
+        String[][] matrizCombinada = new String[filas1 + filas2 - 1][columnas1];
+    
+        for (int i = 0; i < filas1; i++) {
+            for (int j = 0; j < columnas1; j++) {
+                matrizCombinada[i][j] = matriz1[i][j];
+            }
+        }
+    
+        for (int i = 1; i < filas2; i++) {
+            for (int j = 0; j < columnas2; j++) {
+                matrizCombinada[filas1 + i - 1][j] = matriz2[i][j];
+            }
+        }
+    
         return matrizCombinada;
     }
 }
