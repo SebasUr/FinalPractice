@@ -59,6 +59,7 @@ public class PR1OBJECTS {
         System.out.println("====== ¿Qué deseas ver o realizar con tus datos finales? ======");
         System.out.println(" 1. Ver datos nulos de cada columna \n 2. Visualizar primeros datos del dataset \n 3. Visualizar últimos datos del dataset \n 4. Cantidad de registros y columnas \n 5. Visualizar mínimos y máximos de cada colúmna \n 6. Promedio de cada columna \n 7. Cuartiles \n 8. Desviación estándar \n 9. Imprimir mi dataset con sus filtros. \n 10. Salir");
         System.out.println("================================================================");
+        System.out.print("  |=====> ");
         int opcion = in.nextInt();
         boolean h = true;
         while (h==true) {
@@ -66,6 +67,7 @@ public class PR1OBJECTS {
                 for (int i =4;i<(data[0].length);i++) {
                     System.out.println(matriz.contarNulosYVacios(i, primeraFila[i]));
                 }
+                menuFuncionesFinales(matriz, primeraFila);
                 h = false;
             } else if (opcion == 2) { 
                 String[][] nueva = matriz.filtrarPrimeros();
@@ -76,6 +78,7 @@ public class PR1OBJECTS {
                     }
                     System.out.println();
                 }
+                menuFuncionesFinales(matriz, primeraFila);
                 h=false;
             } else if (opcion == 3) {
                 String[][] nueva = matriz.filtrarUltimos();
@@ -86,24 +89,30 @@ public class PR1OBJECTS {
                     }
                     System.out.println();
                 }
+                menuFuncionesFinales(matriz, primeraFila);
                 h = false;
             } else if (opcion == 4) {
                 System.out.println("El número de registros es: " + data.length + " y el número de colúmnas es: " + data[0].length);
+                menuFuncionesFinales(matriz, primeraFila);
                 h=false;
+                
             } else if (opcion == 5) {
                 for (int i = 4;i<data[0].length;i++) {
                     System.out.println(matriz.maxPerColumn(i, primeraFila[i]));
                 }
+                menuFuncionesFinales(matriz, primeraFila);
                 h = false;
             } else if (opcion == 6) {
                 for (int i = 4;i<data[0].length;i++) {
                     System.out.println(matriz.promedioG(i, primeraFila[i]));
                 }
+                menuFuncionesFinales(matriz, primeraFila);
                 h = false;
             } else if (opcion == 7) {
                 for (int i = 4;i<data[0].length;i++) {
                     matriz.cuartil(i, primeraFila[i]);
                 }
+                menuFuncionesFinales(matriz, primeraFila);
                 h = false;
             } else if (opcion == 8) {
                 for (int i = 4;i<data[0].length;i++) {
@@ -114,6 +123,7 @@ public class PR1OBJECTS {
                         System.out.println("En la columna "+ primeraFila[i] + " la desviación estándar es " + desv);
                     }
                 }
+                menuFuncionesFinales(matriz, primeraFila);
                 h = false;
             } else if (opcion == 9) {
                 for(int i =0; i<data.length; i++){
@@ -123,9 +133,10 @@ public class PR1OBJECTS {
                     }
                     System.out.println();
                 }
+                menuFuncionesFinales(matriz, primeraFila);
                 h = false;
             } else if (opcion == 10) {
-                System.out.println(" -:Finalizando.....");
+                System.out.println(" =====>Finalizando.....");
                 h=false;
             }
         }
@@ -138,6 +149,7 @@ public class PR1OBJECTS {
         System.out.println("");
         System.out.println(" -¿Quieres agregar otro filtro?-");
         System.out.println(" 1. Sí\n 2. No");
+        System.out.print("  |=====> ");
         int opcion = in.nextInt();
         boolean h = true;
         String[][] nextFiltrada = MatrizFiltrada;
@@ -160,6 +172,7 @@ public class PR1OBJECTS {
         System.out.println();
         System.out.println("- ¿Qué columnas quieres filtrar? -");
         System.out.println(" 1. Nombre de la estación\n 2. Rango de temperaturas \n 3. Rango de precipitación \n 4. No deseo agregar ningún filtro");
+        System.out.print("  |=====> ");
         boolean h = true;
         Scanner in = new Scanner(System.in);
         int opcion = in.nextInt();
@@ -244,7 +257,8 @@ public class PR1OBJECTS {
     public static String[][] nowWhat(CsvR selectedFile) throws FileNotFoundException{
         Scanner in = new Scanner(System.in);
         System.out.println("■ Escoge qué quieres hacer con el archivo ■ " + selectedFile);
-        System.out.println(" 1. Solamente quiero hacer un análisis completo del archivo\n 2. Adicionar otro archivo \n 3. Cargar un archivo distinto \n 4. Continuar con los filtros" );
+        System.out.println(" 1. Adicionar otro archivo \n 2. Cargar un archivo distinto \n 3. Continuar con los filtros" );
+        System.out.print("  |=====> ");
         int opcion = in.nextInt();
         boolean h = true;
         selectedFile.loadData();
@@ -253,25 +267,22 @@ public class PR1OBJECTS {
 
         while(h==true){
             if(opcion==1){
-                // Csv Analyzer
-                h = false;
-            }else if(opcion==2){
                 CsvR Archivoadicional = selectFile();
                 Archivoadicional.loadData();
                 String[][] matrizAdicional = Archivoadicional.getData();
                 FileActual = Archivoadicional.combinarMatrices(FileActual,matrizAdicional);
                 h=false;
 
-            }else if(opcion==3){
+            }else if(opcion==2){
                 selectedFile = selectFile();
                 nowWhat(selectedFile);
                 h = false;
-            }else if(opcion==4){
+            }else if(opcion==3){
                 System.out.println("Continuando...");
                 System.out.println();
                 return FileActual;
             }
-            else if(opcion>4 || opcion<=0){
+            else if(opcion>3 || opcion<=0){
                 System.out.println("Introduzca un número válido.");
                 opcion = in.nextInt();
             }
@@ -286,7 +297,9 @@ public class PR1OBJECTS {
         File file3 = new File("./3337045.csv");
         Scanner in = new Scanner(System.in);
         System.out.println("        Escoge tu archivo a cargar: ");
-        System.out.println(" 1. Ciudad de Pasadena \n 2. Ciudad de Bremerton \n 3. Ciudad de Oakland\n 4. Cargar un archivo diferente\n 5. Salir");
+        System.out.println(" 1. Estado de california (1) \n 2. Estado de Washington  \n 3. Estado de California (2) \n 4. Cargar un archivo diferente\n 5. Salir");
+        System.out.println("<------------------------------------------->");
+        System.out.print("  |=====> ");
         int opcion = in.nextInt();
         File selectedFile = new File("./3337050.csv");
         boolean h = true;
@@ -295,24 +308,29 @@ public class PR1OBJECTS {
 
         while(h==true){
             if(opcion==1){
-                System.out.println("Cargando archivo de la Ciudad de Pasadena...");
+                System.out.println();
+                System.out.println("    Cargando archivo del Estado de california (1)...");
                 System.out.println();
                 selectedFile = file1;
                 csvArchivo = new CsvR(selectedFile); 
                 h=false;
             }else if(opcion==2){
-                System.out.println("Cargando archivo de la Ciudad de Bremerton...");
+                System.out.println();
+                System.out.println("    Cargando archivo del Estado de Washington...");
                 System.out.println();
                 selectedFile = file2;
                 csvArchivo = new CsvR(selectedFile); 
                 h=false;
             }else if(opcion==3){
-                System.out.println("Cargando archivo de la Ciudad de Oakland...");
+                System.out.println();
+                System.out.println("    Cargando archivo del Estado de California (2)...");
                 System.out.println();
                 selectedFile = file3;
                 csvArchivo = new CsvR(selectedFile); 
                 h=false;
             }else if(opcion==4){
+                System.out.println();
+                System.out.println("    ***RECUERDA QUE TU ARCHIVO DEBERÍA DE SER DE UN ESTADO, CON LAS COLUMNAS CORRESPONDIENTES A LOS DIFERENTES DATOS***");
                 System.out.println("Ingresa la ruta completa del archivo para cargarlo:");
                 String filePath = in.next();
                 selectedFile = new File(filePath);
@@ -330,87 +348,3 @@ public class PR1OBJECTS {
         return csvArchivo;
     }
 }
-
-class ColumnaCSV {  // Utilización de solo arreglos
-    
-    private String nombreColumna;
-    private String[] datos;
-    
-    public ColumnaCSV(String nombreColumna, String archivoCSV) throws FileNotFoundException {
-        this.nombreColumna = nombreColumna;
-        this.datos = leerDatosDeColumna(nombreColumna, archivoCSV);
-    }
-    
-    private String[] leerDatosDeColumna(String nombreColumna, String archivoCSV) throws FileNotFoundException {
-        Scanner scanner = new Scanner(new File(archivoCSV));
-        String[] encabezados = scanner.nextLine().split(",");
-        int indiceColumna = -1;
-        for (int i = 0; i < encabezados.length; i++) {
-            if (encabezados[i].equals(nombreColumna)) {
-                indiceColumna = i;
-                break;
-            }
-        }
-        if (indiceColumna == -1) {
-            throw new IllegalArgumentException("No se encontró la columna " + nombreColumna + " en el archivo " + archivoCSV);
-        }
-        int numFilas = 0;
-        while (scanner.hasNextLine()) {
-            scanner.nextLine();
-            numFilas++;
-        }
-
-        String[] datos = new String[numFilas];
-        scanner = new Scanner(new File(archivoCSV));
-        scanner.nextLine();
-        int filaActual = 0;
-        while (scanner.hasNextLine()) {
-            String[] fila = scanner.nextLine().split(",");
-            datos[filaActual] = fila[indiceColumna];
-            filaActual++;
-        }
-        scanner.close();
-        return datos;
-    }
-    
-    public void imprimirColumna() {
-        System.out.println(nombreColumna);
-        for (String dato : datos) { // for - each
-            System.out.println(dato);
-        }
-    }
-    
-    public String valorMaximo() {
-        String maximo = datos[0];
-        for (int i = 1; i < datos.length; i++) {
-            if (datos[i].compareTo(maximo) > 0) {
-                maximo = datos[i];
-            }
-        }
-        return maximo;
-    }
-    public double valorMinimo() throws NumberFormatException {
-        double minimo = Double.MAX_VALUE;
-        for (int i = 0; i < datos.length; i++) {
-            String dato = datos[i];
-            if (dato != null && !dato.equals("")) {
-                double valor = Double.parseDouble(dato.replace(",", "."));
-                if (valor < minimo) {
-                    minimo = valor;
-                }
-            }
-        }
-        return minimo;
-    }
-    
-    public int contarNulos() {
-        int numNulos = 0;
-        for (String dato : datos) {
-            if (dato == null || dato.equals("")) {
-                numNulos++;
-            }
-        }
-        return numNulos;
-    }
-}
-
