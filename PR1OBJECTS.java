@@ -61,6 +61,11 @@ public class PR1OBJECTS {
         System.out.println("================================================================");
         System.out.print("  |=====> ");
         int opcion = in.nextInt();
+        if (opcion >10 || opcion <1) {
+            System.out.println("  -Ingrese como respuesta el número de la opción que desea elegir-");
+            System.out.print("  |=====> ");
+            opcion = in.nextInt();
+        }
         boolean h = true;
         while (h==true) {
             if (opcion == 1) {
@@ -151,6 +156,11 @@ public class PR1OBJECTS {
         System.out.println(" 1. Sí\n 2. No");
         System.out.print("  |=====> ");
         int opcion = in.nextInt();
+        if (opcion >2 || opcion <1) {
+            System.out.println("  -Ingrese como respuesta el número de la opción que desea elegir-");
+            System.out.print("  |=====> ");
+            opcion = in.nextInt();
+        }
         boolean h = true;
         String[][] nextFiltrada = MatrizFiltrada;
         while(h== true){
@@ -176,6 +186,11 @@ public class PR1OBJECTS {
         boolean h = true;
         Scanner in = new Scanner(System.in);
         int opcion = in.nextInt();
+        if (opcion >4 || opcion <1) {
+            System.out.println("  -Ingrese como respuesta el número de la opción que desea elegir-");
+            System.out.print("  |=====> ");
+            opcion = in.nextInt();
+        }
         String [][] matrizFiltrada = matrizFinal;
         while(h==true){
             if(opcion == 1){
@@ -284,6 +299,7 @@ public class PR1OBJECTS {
             }
             else if(opcion>3 || opcion<=0){
                 System.out.println("Introduzca un número válido.");
+                System.out.print("  |=====> ");
                 opcion = in.nextInt();
             }
         }
@@ -342,6 +358,7 @@ public class PR1OBJECTS {
             }
             else if(opcion>5 || opcion<=0){
                 System.out.println("Introduzca un número válido.");
+                System.out.print("  |=====> ");
                 opcion = in.nextInt();
             }
         }
