@@ -25,25 +25,25 @@ public class PR1OBJECTS {
             primeraFila[i] = Matriztotal[0][i];
         }
 
-        for(int i =0; i<Matriztotal.length; i++){
+        /* for(int i =0; i<Matriztotal.length; i++){
             for(int j=0; j<Matriztotal[i].length-12; j++) // para saber que mtriz llevamos hasta ahora
             {
                 System.out.print(Matriztotal[i][j] + "\t");
             }
             System.out.println();
-        }
+        } */
 
         String[][] FiltrarMatriz = menuFiltrar(Matriztotal);
         String[][] FinallyMatriz = continuarConFiltro(FiltrarMatriz, Matriztotal);
 
-        System.out.println("IMPRIMIENDO FINALMENTE LA MATRIZ");
+        /* System.out.println("IMPRIMIENDO FINALMENTE LA MATRIZ");
         for(int i =0; i<FinallyMatriz.length; i++){
             for(int j=0; j<FinallyMatriz[i].length-16; j++) // para saber que mtriz llevamos hasta ahora
             {
                 System.out.print(FinallyMatriz[i][j] + "\t");
             }
             System.out.println();
-        }
+        } */
         
         MatrizR LastMatriz = new MatrizR(FinallyMatriz);
         if(LastMatriz.getMatriz().length<=0){
@@ -259,14 +259,14 @@ public class PR1OBJECTS {
 
                 matrizFiltrada = MatrizR.filtrarMatriz(matrizFinal, 0, nombreCo);
                 
-                // comprobar filtro ---- ELIMINAR LUEGO
+                /* // comprobar filtro ---- ELIMINAR LUEGO
                 for(int i =0; i<matrizFiltrada.length; i++){
                     for(int j=0; j<matrizFiltrada[i].length-18; j++) // Comprobar matriz que se lleva hasta ahora
                     {
                         System.out.print(matrizFiltrada[i][j] + "\t");
                     }
                     System.out.println();
-                }
+                } */
 
                 return matrizFiltrada;
             } else if(opcion == 2){
