@@ -152,10 +152,6 @@ public class MatrizR {
 
     public static String[][] filtrarMatrizPorRango(String[][] matriz, int columna, String rangoMenor, String rangoMayor) {
         int contador = 0;
-/*         rangoMenor = "\"" + rangoMenor + "\"";
-        rangoMayor = "\"" + rangoMayor + "\""; */
-        
-        // Contar cuántas filas están dentro del rango especificado en la columna dada
         for (int i = 0; i < matriz.length; i++) {
             if(matriz[i][columna] !=null){
                 String edad = matriz[i][columna];
@@ -165,11 +161,10 @@ public class MatrizR {
             }
         }
         
-        // Crear una nueva matriz con el tamaño adecuado
+
         String[][] matrizFiltrada = new String[contador][matriz[0].length];
         int fila = 0;
         
-        // Copiar las filas que están dentro del rango a la nueva matriz
         for (int i = 0; i < matriz.length; i++) {
             if(matriz[i][columna] !=null){
                 String edad = matriz[i][columna];
@@ -193,24 +188,37 @@ public class MatrizR {
         for (int i = 0; i < filas; i++) {
             arr[i] = data[i][columna];
         }
-
+    
         int nuls = nulosArreglo(arr);
-        int longi = (filas - nuls);
+        int longi = filas - nuls;
         String[] arr2 = new String[longi];
-
+    
         int contador = 0;
-
-        for (int l = 0;l<filas;l++) {
-            if (!(arr[l] == null  || arr[l].isEmpty() || arr[l].equals(""))) {
+    
+        for (int l = 0; l < filas; l++) {
+            if (!(arr[l] == null || arr[l].isEmpty() || arr[l].equals(""))) {
                 arr2[contador] = arr[l];
                 contador++;
             }
         }
-
-        double[] nums = new double[longi];
-
-        for (int j = 0;j<longi;j++) {
-            nums[j] = quitarComillas(arr2[j]);
+    
+        double[] nums;
+        try {
+            nums = new double[longi];
+    
+            for (int j = 0; j < longi; j++) {
+                if (j == 0 && !esNumero(arr2[j])) {
+                    continue; 
+                }
+                nums[j] = quitarComillas(arr2[j]);
+            }
+        } catch (NumberFormatException e) {
+            nums = new double[longi - 1];
+            int count = 1;
+            for (int j = 0; j < longi - 1; j++) {
+                nums[j] = quitarComillas(arr2[count]);
+                count++;
+            }
         }
         
         ordenarArreglo(nums);
@@ -219,13 +227,21 @@ public class MatrizR {
         int index2 = (int) Math.ceil(longi * 0.75) - 1; 
         
         if (nums.length > 0) {
-            System.out.println("En la columna " + name + " el primer cuartil es: " + nums[index] + " Y el tercer cuartil es: " + nums[index2]);
+            System.out.println("En la columna " + name + " el primer cuartil es: " + nums[index] + " y el tercer cuartil es: " + nums[index2]);
         } else {
             System.out.println("La columna " + name + " no tiene cuartiles debido a que es nula o vacía");
-
         }
-        
     }
+    
+    private boolean esNumero(String str) {
+        try {
+            Double.parseDouble(str);
+            return true;
+        } catch (NumberFormatException e) {
+            return false;
+        }
+    }
+    
 
 
     public double promedio(int columna) {
